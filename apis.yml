@@ -1,7 +1,11 @@
 aid: yum-brands
-url: https://raw.githubusercontent.com/api-evangelist/yum-brands/refs/heads/main/apis.yml
+url: 
+  https://raw.githubusercontent.com/api-evangelist/yum-brands/refs/heads/main/apis.yml
 modified: '2026-03-21'
 apis: []
 common:
   - type: Website
     url: https://www.yum-brands.com
+description: >-
+  Yum! Brands is one of the world's largest restaurant companies, with global brands
+  including KFC, Pizza Hut, Taco Bell, and The Habit Burger Grill.
