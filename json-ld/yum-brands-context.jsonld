@@ -1,0 +1,83 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "schema": "https://schema.org/",
+    "yum": "https://www.yum.com/vocab/",
+
+    "YumBrands": {
+      "@id": "schema:FoodEstablishmentReservation",
+      "@type": "@id"
+    },
+    "Restaurant": "schema:FoodEstablishment",
+    "Brand": "schema:Brand",
+    "FranchiseLocation": "schema:LocalBusiness",
+    "MenuItem": "schema:MenuItem",
+    "MenuSection": "schema:MenuSection",
+    "Menu": "schema:Menu",
+    "LoyaltyProgram": "schema:ProgramMembership",
+    "LoyaltyPoints": "schema:MonetaryAmount",
+    "DigitalOrder": "schema:Order",
+    "OrderItem": "schema:OrderItem",
+    "DeliveryAddress": "schema:PostalAddress",
+    "Payment": "schema:PaymentMethod",
+
+    "bytePlatform": {
+      "@id": "yum:bytePlatform",
+      "@type": "@id"
+    },
+    "digitalTransaction": {
+      "@id": "yum:digitalTransaction"
+    },
+    "loyaltyPoints": {
+      "@id": "yum:loyaltyPoints"
+    },
+    "franchiseId": {
+      "@id": "yum:franchiseId"
+    },
+    "restaurantBrand": {
+      "@id": "yum:restaurantBrand"
+    },
+    "kitchenDisplaySystem": {
+      "@id": "yum:kitchenDisplaySystem",
+      "@type": "@id"
+    },
+    "menuItemPrice": {
+      "@id": "schema:price"
+    },
+    "menuItemName": {
+      "@id": "schema:name"
+    },
+    "menuItemDescription": {
+      "@id": "schema:description"
+    },
+    "calories": {
+      "@id": "schema:calories"
+    },
+    "restaurantAddress": {
+      "@id": "schema:address",
+      "@type": "schema:PostalAddress"
+    },
+    "restaurantHours": {
+      "@id": "schema:openingHoursSpecification",
+      "@type": "schema:OpeningHoursSpecification"
+    },
+    "orderStatus": {
+      "@id": "schema:orderStatus"
+    },
+    "estimatedDeliveryTime": {
+      "@id": "schema:expectedArrivalFrom"
+    },
+    "country": {
+      "@id": "schema:addressCountry"
+    },
+    "postalCode": {
+      "@id": "schema:postalCode"
+    },
+    "latitude": {
+      "@id": "schema:latitude"
+    },
+    "longitude": {
+      "@id": "schema:longitude"
+    }
+  }
+}

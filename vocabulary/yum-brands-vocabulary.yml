@@ -1,0 +1,150 @@
+vocabulary:
+  name: Yum Brands Vocabulary
+  description: >-
+    Domain vocabulary for Yum! Brands covering restaurant technology, digital
+    ordering, loyalty programs, and franchise operations across KFC, Pizza Hut,
+    Taco Bell, and The Habit Burger Grill.
+  version: '2026-05-03'
+  tags:
+    - Restaurants
+    - Fast Food
+    - Digital Ordering
+    - Loyalty
+    - Restaurant Technology
+
+terms:
+  # Core Brand Terms
+  - term: Byte by Yum!
+    definition: >-
+      Yum! Brands' proprietary AI-driven restaurant technology SaaS platform
+      that powers digital ordering, point-of-sale, kitchen operations, inventory
+      management, and loyalty programs across all four brands globally.
+    tags:
+      - Platform
+      - Technology
+
+  - term: Zap
+    definition: >-
+      A digital transaction processed through the Byte by Yum! platform, used
+      as a metric for measuring digital engagement across Yum! Brands
+      restaurant portfolio.
+    tags:
+      - Metrics
+      - Digital
+
+  - term: Digital Ordering
+    definition: >-
+      Online and mobile app-based food ordering capability enabling customers
+      to place orders for delivery, pickup, or dine-in through Yum! Brands'
+      digital channels.
+    tags:
+      - Ordering
+      - Digital
+
+  - term: Franchise
+    definition: >-
+      An independently owned and operated restaurant location licensed to use
+      Yum! Brands' brand trademarks, menus, and operating standards. Approximately
+      90% of Yum! Brands' 63,000+ restaurants are franchise-operated.
+    tags:
+      - Operations
+      - Business Model
+
+  - term: Loyalty Program
+    definition: >-
+      A customer rewards system offering points, discounts, and exclusive offers
+      to incentivize repeat visits at KFC, Pizza Hut, Taco Bell, and Habit
+      Burger locations.
+    tags:
+      - Customer Engagement
+      - Loyalty
+
+  - term: Point of Sale (POS)
+    definition: >-
+      The integrated system used at Yum! Brands' restaurants to process customer
+      orders, handle payments, and manage kitchen workflows, now powered by the
+      Byte by Yum! platform.
+    tags:
+      - Operations
+      - Technology
+
+  - term: KFC
+    definition: >-
+      Kentucky Fried Chicken - one of Yum! Brands' global quick service
+      restaurant chains specializing in fried chicken, operating in over 155
+      countries.
+    tags:
+      - Brand
+      - Restaurants
+
+  - term: Pizza Hut
+    definition: >-
+      A global pizza restaurant chain under Yum! Brands, offering dine-in,
+      delivery, and carryout across international markets.
+    tags:
+      - Brand
+      - Restaurants
+
+  - term: Taco Bell
+    definition: >-
+      A Mexican-inspired quick service restaurant brand under Yum! Brands,
+      known for digital innovation and its Taco Bell Rewards loyalty program.
+    tags:
+      - Brand
+      - Restaurants
+
+  - term: The Habit Burger Grill
+    definition: >-
+      A fast-casual restaurant chain under Yum! Brands known for charburgers,
+      acquired in 2020 to expand Yum! Brands' portfolio.
+    tags:
+      - Brand
+      - Restaurants
+
+  - term: Digital Transaction
+    definition: >-
+      Any customer order placed through digital channels (app, web, kiosk)
+      rather than traditional in-person at-counter ordering.
+    tags:
+      - Metrics
+      - Digital
+
+  - term: Kitchen Operations
+    definition: >-
+      Technology systems for managing food preparation workflows, order queuing,
+      and kitchen display systems within a Yum! Brands restaurant.
+    tags:
+      - Operations
+      - Technology
+
+  - term: Menu Management
+    definition: >-
+      Centralized digital control of menu items, pricing, availability, and
+      localization across franchise locations and digital ordering channels.
+    tags:
+      - Operations
+      - Digital
+
+  - term: Delivery Optimization
+    definition: >-
+      AI-driven tools for optimizing food delivery routing, timing, and
+      third-party delivery partner integrations.
+    tags:
+      - Delivery
+      - Logistics
+
+  - term: Labor Management
+    definition: >-
+      Workforce scheduling, time tracking, and team member management tools
+      integrated within the Byte by Yum! platform.
+    tags:
+      - Operations
+      - Human Resources
+
+  - term: Inventory Management
+    definition: >-
+      System for tracking ingredient levels, managing supply orders, and
+      reducing food waste across Yum! Brands restaurant locations.
+    tags:
+      - Operations
+      - Supply Chain
