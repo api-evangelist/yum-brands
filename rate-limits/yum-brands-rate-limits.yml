@@ -4,87 +4,31 @@ schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main
 provider: Yum Brands
 providerId: yum-brands
 created: '2026-05-04'
-modified: '2026-05-04'
+modified: '2026-05-05'
+reconciled: false
 tags:
   - Restaurants
   - Fast Food
-  - Quick Service Restaurant
-  - Digital Ordering
-  - Loyalty
-  - Food Technology
   - Rate Limiting
-  - Quotas
-  - Throttling
-description: Machine-readable rate limit definitions for the Yum Brands API surface. Captures per-tier
-  quotas, burst behavior, response signaling, and recovery semantics. Defaults are scaffold values to
-  be replaced with published provider limits.
-headers:
-  limit: X-RateLimit-Limit
-  remaining: X-RateLimit-Remaining
-  reset: X-RateLimit-Reset
-  retryAfter: Retry-After
-  policy: RateLimit-Policy
+description: |
+  Yum! Brands does not publish a developer API or rate-limit policy. Any internal
+  brand APIs (KFC / Pizza Hut / Taco Bell mobile and ordering platforms) are gated
+  to franchise / supplier integrations and not part of a public surface.
+sources:
+  - https://www.yum.com/
 responseCodes:
   throttled: 429
-  quotaExceeded: 429
-  serviceUnavailable: 503
 limits:
-  - tier: free
-    name: Free Tier Default
-    scope: api-key
-    metric: requests_per_minute
-    limit: 10
-    burst: 20
-    timeFrame: minute
-    applies:
-      - Byte by Yum! Platform
-  - tier: free
-    name: Free Tier Monthly Quota
-    scope: api-key
-    metric: requests_per_month
-    limit: 1000
-    timeFrame: month
-    applies:
-      - Byte by Yum! Platform
-  - tier: professional
-    name: Professional Tier Default
-    scope: api-key
-    metric: requests_per_minute
-    limit: 100
-    burst: 200
-    timeFrame: minute
-    applies:
-      - Byte by Yum! Platform
-  - tier: professional
-    name: Professional Tier Monthly Quota
-    scope: api-key
-    metric: requests_per_month
-    limit: 100000
-    timeFrame: month
-    applies:
-      - Byte by Yum! Platform
-  - tier: enterprise
-    name: Enterprise Negotiated Limit
-    scope: contract
-    metric: requests_per_minute
-    limit: 1000
-    burst: 5000
-    timeFrame: minute
-    applies:
-      - Byte by Yum! Platform
+  - name: No public API
+    scope: account
+    metric: varies
+    limit: not applicable — no public API surface
+    notes: Brand-level apps and ordering systems are private; partner access is governed
+      by individual franchise / supplier agreements.
 policies:
-  - name: Backoff Strategy
-    description: Clients should implement exponential backoff with jitter, honoring the Retry-After header
-      when present.
-  - name: Burst Handling
-    description: Short bursts above the steady-state limit are tolerated up to the documented burst ceiling
-      before throttling engages.
-  - name: Quota Reset
-    description: Monthly quotas reset at the start of each calendar month in UTC. Per-minute and per-second
-      windows reset on a sliding-window basis.
-  - name: Fair Use
-    description: Even on uncapped enterprise tiers, sustained usage that materially impacts shared infrastructure
-      may be subject to fair-use throttling.
+  - name: Partner gating
+    description: Access to any Yum! Brands integration surface requires a brand-level
+      partnership and is communicated only to onboarded partners.
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com

@@ -1,5 +1,6 @@
 specification: FinOps Framework
 specificationVersion: '1.0'
+schema: https://www.finops.org/framework/
 alignedWith:
   framework: FinOps Foundation Framework
   frameworkUrl: https://www.finops.org/framework/
@@ -8,127 +9,58 @@ alignedWith:
   dataSpecUrl: https://focus.finops.org/focus-specification/v1-3/
 provider: Yum Brands
 providerId: yum-brands
-publisherName: Yum Brands
-serviceCategory: API
+publisherName: Yum! Brands, Inc.
+serviceCategory: Quick Service Restaurants
 created: '2026-05-04'
-modified: '2026-05-04'
+modified: '2026-05-05'
+reconciled: false
 tags:
   - Restaurants
   - Fast Food
-  - Quick Service Restaurant
-  - Digital Ordering
-  - Loyalty
-  - Food Technology
   - FinOps
-  - Cost Management
   - FOCUS
-description: FinOps framework definition for the Yum Brands API surface. Provides a FOCUS-aligned mapping
-  for cost allocation, usage measurement, and unit-economics reporting across the provider's APIs.
-principles:
-  - name: Visibility
-    description: Make API consumption costs visible to engineering, product, and finance teams in near
-      real-time.
-  - name: Allocation
-    description: Tag every chargeable API call with the consuming team, environment, application, and
-      feature so cost can be allocated.
-  - name: Optimization
-    description: Continuously evaluate request patterns, caching, batching, and tier selection to reduce
-      cost per useful unit of work.
-  - name: Accountability
-    description: Establish budget owners and chargeback or showback flows for each consuming team.
-domains:
-  - name: Understand Usage and Cost
-    capabilities:
-      - Data Ingestion
-      - Allocation
-      - Reporting and Analytics
-      - Anomaly Management
-  - name: Quantify Business Value
-    capabilities:
-      - Planning and Estimating
-      - Forecasting
-      - Budgeting
-      - Benchmarking
-      - Unit Economics
-  - name: Optimize Usage and Cost
-    capabilities:
-      - Architecting for Cloud
-      - Rate Optimization
-      - Workload Optimization
-      - Cloud Sustainability
-      - Licensing and SaaS
-  - name: Manage the FinOps Practice
-    capabilities:
-      - FinOps Practice Operations
-      - FinOps Education and Enablement
-      - Invoicing and Chargeback
-      - Onboarding Workloads
-      - Intersecting Disciplines
+description: |
+  Yum! Brands does not operate a metered API; this artifact is a Contact Sales
+  placeholder rather than a billable cost surface.
+sources:
+  - https://www.yum.com/
+notes: |
+  No public API or invoice line-item documentation exists for Yum! Brands. Any
+  partner-side spend (royalties, supplier fees, advertising co-op contributions)
+  flows through brand-level franchise / supplier contracts, not a developer billing
+  surface.
 billingModel:
-  pricingCategory: Usage-Based
-  billingFrequency: Monthly
+  pricingCategory: Contact Sales
+  billingFrequency: Per-Invoice
   billingCurrency: USD
   chargeCategories:
-    - Usage
     - Purchase
-    - Tax
-    - Credit
-    - Adjustment
-  chargeFrequency: Recurring
 focusColumns:
-  ServiceName: Yum Brands
-  ServiceCategory: Developer Tools / API
-  ProviderName: Yum Brands
-  PublisherName: Yum Brands
-  InvoiceIssuerName: Yum Brands
-  PricingCategory: Usage-Based
-  PricingUnit: request
+  ServiceName: Yum! Brands
+  ServiceCategory: Quick Service Restaurants
+  ProviderName: Yum! Brands
+  PublisherName: Yum! Brands, Inc.
+  InvoiceIssuerName: Yum! Brands, Inc.
   BillingCurrency: USD
-  ChargeCategory: Usage
 meters:
-  - name: api_requests
-    description: Count of billable API requests
-    unit: request
-    aggregation: sum
-    dimensions:
-      - api
-      - endpoint
-      - tier
-      - region
-      - consumer
-  - name: data_egress
-    description: Bytes returned over the network in API responses
-    unit: GB
-    aggregation: sum
-    dimensions:
-      - api
-      - region
-      - consumer
-  - name: compute_seconds
-    description: Server-side compute consumed by the request, where applicable
-    unit: second
-    aggregation: sum
-    dimensions:
-      - api
-      - endpoint
-      - tier
-apis:
-  - name: Byte by Yum! Platform
-    baseURL: https://api.yum.com
-    tags:
-      - Digital Ordering
-      - Loyalty
-      - POS
-      - Restaurant Technology
-    serviceName: Byte by Yum! Platform
-    serviceCategory: API
-unitEconomics:
-  - name: Cost per 1K Requests
-    metric: billed_cost / (api_requests / 1000)
-    target: TBD
-  - name: Cost per Active Consumer
-    metric: billed_cost / active_consumers
-    target: TBD
+  - name: partnership_agreements
+    description: Negotiated brand / franchise / supplier agreement line items; not a
+      metered API meter.
+    unit: varies
+    aggregation: count
+principles:
+  - name: Visibility
+    description: Spend visibility flows through the partner's own AP / contract management
+      system; Yum! Brands does not expose a usage API.
+  - name: Allocation
+    description: Allocate by brand (KFC / Pizza Hut / Taco Bell / Habit Burger) and by
+      contract type (franchise royalty, supplier, marketing co-op).
+  - name: Optimization
+    description: Optimization happens at contract renewal (volume tiers, exclusivity, term
+      length) rather than via runtime levers.
+  - name: Accountability
+    description: Spend ownership sits with the franchisee / supplier finance lead who is
+      counterparty to the Yum! Brands agreement.
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
