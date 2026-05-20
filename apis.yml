@@ -44,6 +44,8 @@ apis:
       - type: Support
         url: https://www.yum.com/wps/portal/yumbrands/Yumbrands/careers/yum-digital-tech
 common:
+  - type: LinkedIn
+    url: https://www.linkedin.com/company/yum-brands
   - type: Website
     url: https://www.yum.com
   - type: Portal
