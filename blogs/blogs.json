@@ -2,13 +2,17 @@
   "repo": "yum-brands",
   "feeds": [
     {
-      "source": "https://www.yum.com/wps/portal/yumbrands/Yumbrands/news",
-      "feed_url": "",
+      "source": "https://www.yum.com/wps/portal/yumbrands/Yumbrands/bytebyyum",
+      "feed_url": "https://www.yum.com/wps/portal/yumbrands/Yumbrands/bytebyyum",
       "title": "",
       "saved": 0,
-      "error": "no_feed"
+      "method": "none"
+    },
+    {
+      "source": "https://investors.yum.com",
+      "error": "HTTPError"
     }
   ],
-  "fetched": "2026-05-17T20:48:52Z",
+  "fetched": "2026-06-01T23:35:02Z",
   "post_count": 0
 }
