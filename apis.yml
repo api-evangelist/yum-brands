@@ -2,7 +2,7 @@ aid: yum-brands
 name: Yum Brands
 url: https://raw.githubusercontent.com/api-evangelist/yum-brands/refs/heads/main/apis.yml
 created: '2026-03-21'
-modified: '2026-05-03'
+modified: '2026-06-03'
 specificationVersion: '0.19'
 description: >-
   Yum! Brands is one of the world's largest restaurant companies, with global
@@ -27,7 +27,6 @@ apis:
       menu management, inventory, and labor management across KFC, Pizza Hut,
       Taco Bell, and The Habit Burger Grill worldwide.
     humanURL: https://www.yum.com/wps/portal/yumbrands/Yumbrands/bytebyyum
-    baseURL: https://api.yum.com
     tags:
       - Digital Ordering
       - Loyalty
@@ -60,6 +59,21 @@ common:
     url: https://www.yum.com/wps/portal/yumbrands/Yumbrands/home/privacy
   - type: AnnualReport
     url: https://s2.q4cdn.com/890585342/files/doc_financials/2024/ar/annual-report-2024/index.html
+  - type: JSONLD
+    url: https://raw.githubusercontent.com/api-evangelist/yum-brands/refs/heads/main/json-ld/yum-brands-context.jsonld
+    title: JSON-LD Context
+  - type: Resources
+    url: https://raw.githubusercontent.com/api-evangelist/yum-brands/refs/heads/main/vocabulary/yum-brands-vocabulary.yml
+    title: Vocabulary
+  - type: Plans
+    url: https://raw.githubusercontent.com/api-evangelist/yum-brands/refs/heads/main/plans/yum-brands-plans-pricing.yml
+    title: Plans and Pricing
+  - type: RateLimits
+    url: https://raw.githubusercontent.com/api-evangelist/yum-brands/refs/heads/main/rate-limits/yum-brands-rate-limits.yml
+    title: Rate Limits
+  - type: Resources
+    url: https://raw.githubusercontent.com/api-evangelist/yum-brands/refs/heads/main/finops/yum-brands-finops.yml
+    title: FinOps
   - type: Features
     data:
       - name: Digital Ordering
@@ -78,6 +92,32 @@ common:
       - name: Franchise Operations Management
       - name: Customer Digital Experience
       - name: Global Restaurant Management
+  - type: Integrations
+    data:
+      - name: Dragontail Systems
+        description: >-
+          AI-driven kitchen order management and delivery technology acquired in
+          2021 ($69.1M), optimizing food preparation from order through delivery.
+      - name: Tictuk Technologies
+        description: >-
+          Omnichannel conversational ordering and marketing platform (acquired
+          2021) enabling ordering via text, social media, and messaging channels.
+      - name: Kvantum
+        description: >-
+          AI-based consumer insights and marketing performance analytics company
+          acquired in 2021.
+      - name: QuikOrder
+        description: >-
+          Online ordering software and service provider acquired by Pizza Hut U.S.
+          in 2018, long-time provider of Pizza Hut's digital ordering platform.
+      - name: Heartstyles
+        description: >-
+          Omnichannel learning and development training platform acquired in 2020.
+      - name: NVIDIA
+        description: >-
+          Partnership using NVIDIA NIM microservices, Riva, and AI Enterprise to
+          build AI voice-ordering agents and computer-vision drive-thru analytics
+          across KFC, Pizza Hut, and Taco Bell locations.
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
