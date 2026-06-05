@@ -18,6 +18,7 @@ tags:
   - Digital Ordering
   - Loyalty
   - Food Technology
+  - Fortune 500
 apis:
   - aid: yum-brands:byte-by-yum
     name: Byte by Yum! Platform
