@@ -1,0 +1,1103 @@
+"""
+Yum! Brands GraphQL Schema
+Conceptual schema for the Byte by Yum! platform covering KFC, Pizza Hut, Taco Bell,
+and The Habit Burger Grill digital ordering, loyalty, menu, and restaurant operations.
+"""
+
+# ─── Enums ────────────────────────────────────────────────────────────────────
+
+enum ServiceMode {
+  DINE_IN
+  DRIVE_THROUGH
+  TAKEOUT
+  DELIVERY
+  CATERING
+  CURBSIDE
+}
+
+enum DayOfWeek {
+  MONDAY
+  TUESDAY
+  WEDNESDAY
+  THURSDAY
+  FRIDAY
+  SATURDAY
+  SUNDAY
+}
+
+enum OrderStatusValue {
+  CART
+  PLACED
+  CONFIRMED
+  PREPARING
+  READY
+  OUT_FOR_DELIVERY
+  DELIVERED
+  PICKED_UP
+  CANCELLED
+  REFUNDED
+}
+
+enum PaymentType {
+  CASH
+  CARD
+  DIGITAL_WALLET
+  LOYALTY_POINTS
+  GIFT_CARD
+}
+
+enum AllergenType {
+  GLUTEN
+  DAIRY
+  EGGS
+  NUTS
+  PEANUTS
+  SOY
+  SHELLFISH
+  FISH
+  SESAME
+  WHEAT
+}
+
+enum BrandIdentifier {
+  KFC
+  PIZZA_HUT
+  TACO_BELL
+  HABIT_BURGER
+}
+
+enum WebhookEvent {
+  ORDER_PLACED
+  ORDER_CONFIRMED
+  ORDER_READY
+  ORDER_DELIVERED
+  ORDER_CANCELLED
+  LOYALTY_POINTS_EARNED
+  LOYALTY_POINTS_REDEEMED
+  PROMOTION_ACTIVATED
+}
+
+enum ReviewStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+# ─── Scalars ──────────────────────────────────────────────────────────────────
+
+scalar DateTime
+scalar Date
+scalar Time
+scalar URL
+scalar Currency
+scalar JSON
+scalar GeoCoordinate
+
+# ─── Core Brand and Restaurant Types ──────────────────────────────────────────
+
+"""Top-level brand entity for one of the four Yum! Brands restaurant chains."""
+type Brand {
+  id: ID!
+  identifier: BrandIdentifier!
+  name: String!
+  description: String
+  logoUrl: URL
+  websiteUrl: URL
+  loyaltyProgram: RewardProgram
+  restaurants(
+    location: LocationInput
+    radius: Float
+    limit: Int
+    offset: Int
+  ): [Restaurant!]!
+  menus: [Menu!]!
+  promotions: [Promotion!]!
+  deals: [Deal!]!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+"""KFC-specific brand attributes including Colonel's Club loyalty and signature products."""
+type KFC {
+  brand: Brand!
+  colonelsClub: RewardProgram
+  bucketMeals: [Combo!]!
+  familyMeals: [Combo!]!
+  signatureRecipes: [MenuItem!]!
+  driveThruEnabled: Boolean!
+  deliveryPartners: [String!]!
+}
+
+"""Pizza Hut-specific brand attributes including Hut Rewards and pizza builder."""
+type PizzaHut {
+  brand: Brand!
+  hutRewards: RewardProgram
+  pizzaBuilder: JSON
+  dineInLocations: Int
+  expressLocations: Int
+  deliveryZones: [DeliveryZone!]!
+  wingStreetMenu: [MenuCategory!]
+}
+
+"""Taco Bell-specific brand attributes including Live Mas loyalty and customization matrix."""
+type TacoBell {
+  brand: Brand!
+  liveMasLoyalty: RewardProgram
+  customizationMatrix: JSON
+  vegetarianOptions: [MenuItem!]!
+  lateNightMenu: Menu
+  mobileOrderEnabled: Boolean!
+  driveThroughEnabled: Boolean!
+}
+
+"""The Habit Burger Grill-specific attributes including Habit Rewards and char-grilled menu."""
+type HabitBurger {
+  brand: Brand!
+  habitRewards: RewardProgram
+  charGrilledItems: [MenuItem!]!
+  freshIngredients: [String!]!
+  customBurgerOptions: [Modification!]!
+  charBurgerSignature: MenuItem
+}
+
+"""Individual restaurant location."""
+type Restaurant {
+  id: ID!
+  brand: Brand!
+  storeNumber: StoreNumber!
+  name: String!
+  address: Address!
+  location: Location!
+  details: RestaurantDetails!
+  hours: [StoreHours!]!
+  phone: String
+  menu: Menu
+  isOpen: Boolean!
+  isTemporarilyClosed: Boolean!
+  isFranchise: Boolean!
+  franchiseeName: String
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+"""Extended restaurant attributes including available service modes."""
+type RestaurantDetails {
+  restaurant: Restaurant!
+  hasDriveThrough: Boolean!
+  hasDineIn: Boolean!
+  hasDelivery: Boolean!
+  hasTakeout: Boolean!
+  hasCatering: Boolean!
+  hasCurbside: Boolean!
+  hasMobileOrdering: Boolean!
+  hasWifi: Boolean!
+  hasPlayground: Boolean!
+  isHandicapAccessible: Boolean!
+  parkingAvailable: Boolean!
+  driveThroughLanes: Int
+  seatingCapacity: Int
+  deliveryRadius: Float
+  deliveryProviders: [String!]!
+}
+
+"""Brand-specific store number and franchisee association."""
+type StoreNumber {
+  id: ID!
+  value: String!
+  brand: Brand!
+  franchiseeId: String
+  marketCode: String
+  regionCode: String
+}
+
+"""Operating hours for a specific day."""
+type StoreHours {
+  restaurant: Restaurant!
+  dayOfWeek: DayOfWeek!
+  openTime: Time
+  closeTime: Time
+  is24Hours: Boolean!
+  isClosed: Boolean!
+  driveThruOpen: Time
+  driveThruClose: Time
+  deliveryOpen: Time
+  deliveryClose: Time
+}
+
+"""Geographic location with coordinates."""
+type Location {
+  latitude: GeoCoordinate!
+  longitude: GeoCoordinate!
+  altitude: Float
+  accuracy: Float
+}
+
+"""Physical address."""
+type Address {
+  street1: String!
+  street2: String
+  city: String!
+  state: String!
+  postalCode: String!
+  country: String!
+  formatted: String!
+}
+
+"""Delivery zone polygon or radius for a restaurant."""
+type DeliveryZone {
+  restaurantId: ID!
+  radiusMiles: Float
+  polygon: JSON
+  isActive: Boolean!
+}
+
+# ─── Menu Types ───────────────────────────────────────────────────────────────
+
+"""Full menu for a brand or specific restaurant, optionally filtered by service mode."""
+type Menu {
+  id: ID!
+  restaurant: Restaurant
+  brand: Brand!
+  serviceMode: ServiceMode
+  categories: [MenuCategory!]!
+  featuredItems: [MenuItem!]!
+  combos: [Combo!]!
+  isActive: Boolean!
+  effectiveDate: Date
+  expiryDate: Date
+  updatedAt: DateTime!
+}
+
+"""Grouping of menu items within a menu."""
+type MenuCategory {
+  id: ID!
+  menu: Menu!
+  name: String!
+  description: String
+  displayOrder: Int!
+  imageUrl: URL
+  items: [MenuItem!]!
+  subcategories: [MenuCategory!]
+  isActive: Boolean!
+}
+
+"""Individual menu item."""
+type MenuItem {
+  id: ID!
+  category: MenuCategory!
+  brand: Brand!
+  name: String!
+  description: String
+  shortDescription: String
+  images: [MenuItemImage!]!
+  details: MenuItemDetails!
+  basePrice: Price!
+  sizeOptions: [SizeOption!]!
+  modifications: [Modification!]!
+  addons: [Addons!]!
+  nutrition: Nutrition!
+  allergens: [AllergenType!]!
+  isAvailable: Boolean!
+  isPopular: Boolean!
+  isNew: Boolean!
+  isLimitedTime: Boolean!
+  isVegetarian: Boolean!
+  isVegan: Boolean!
+  isHalal: Boolean!
+  isKosher: Boolean!
+  isSpicy: Boolean!
+  spiceLevel: Int
+  tags: [String!]!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+"""Extended menu item details."""
+type MenuItemDetails {
+  item: MenuItem!
+  ingredients: [String!]!
+  preparationTime: Int
+  servingSize: String
+  servingSizeUnit: String
+  cookingMethod: String
+  originStory: String
+}
+
+"""Image associated with a menu item."""
+type MenuItemImage {
+  id: ID!
+  url: URL!
+  altText: String
+  width: Int
+  height: Int
+  isPrimary: Boolean!
+}
+
+"""Bundled meal combination."""
+type Combo {
+  id: ID!
+  brand: Brand!
+  name: String!
+  description: String
+  items: [ComboItem!]!
+  price: Price!
+  sizeOptions: [SizeOption!]!
+  imageUrl: URL
+  nutrition: Nutrition!
+  isAvailable: Boolean!
+  isLimitedTime: Boolean!
+  savingsAmount: Float
+}
+
+"""Individual component within a combo."""
+type ComboItem {
+  id: ID!
+  combo: Combo!
+  menuItem: MenuItem!
+  quantity: Int!
+  isSwappable: Boolean!
+  swapOptions: [MenuItem!]!
+  defaultSize: SizeOption
+}
+
+"""Size variant for a menu item or combo."""
+type SizeOption {
+  id: ID!
+  name: String!
+  abbreviation: String
+  price: Price!
+  nutritionModifier: Float
+  isDefault: Boolean!
+  displayOrder: Int!
+}
+
+"""Price with currency."""
+type Price {
+  amount: Float!
+  currency: String!
+  formatted: String!
+}
+
+"""Available customization for a menu item."""
+type Modification {
+  id: ID!
+  name: String!
+  description: String
+  options: [ModificationOption!]!
+  isRequired: Boolean!
+  minSelections: Int
+  maxSelections: Int
+  displayOrder: Int!
+}
+
+"""A single option within a modification group."""
+type ModificationOption {
+  id: ID!
+  modification: Modification!
+  name: String!
+  priceModifier: Float!
+  isDefault: Boolean!
+  isAvailable: Boolean!
+  nutrition: Nutrition
+}
+
+"""Add-on items that can be appended to an order item."""
+type Addons {
+  id: ID!
+  name: String!
+  items: [MenuItem!]!
+  maxQuantity: Int
+}
+
+# ─── Nutrition and Allergens ──────────────────────────────────────────────────
+
+"""Nutritional information per serving."""
+type Nutrition {
+  calories: Int!
+  caloriesFromFat: Int
+  totalFatG: Float
+  saturatedFatG: Float
+  transFatG: Float
+  cholesterolMg: Float
+  sodiumMg: Float
+  totalCarbohydratesG: Float
+  dietaryFiberG: Float
+  sugarsG: Float
+  addedSugarsG: Float
+  proteinG: Float
+  vitaminD: Float
+  calciumMg: Float
+  ironMg: Float
+  potassiumMg: Float
+  servingSize: String
+  servingUnit: String
+}
+
+# ─── Ordering Types ───────────────────────────────────────────────────────────
+
+"""Customer order with items, totals, payment, and status."""
+type Order {
+  id: ID!
+  customer: Customer
+  guestEmail: String
+  restaurant: Restaurant!
+  brand: Brand!
+  serviceMode: ServiceMode!
+  items: [CartItem!]!
+  summary: OrderSummary!
+  total: OrderTotal!
+  payment: Payment
+  promotions: [Promotion!]!
+  status: OrderStatus!
+  tracking: OrderTracking
+  estimatedReadyTime: DateTime
+  estimatedDeliveryTime: DateTime
+  specialInstructions: String
+  placedAt: DateTime
+  confirmedAt: DateTime
+  completedAt: DateTime
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+"""Line item in an active cart or placed order."""
+type CartItem {
+  id: ID!
+  menuItem: MenuItem!
+  quantity: Int!
+  unitPrice: Price!
+  totalPrice: Price!
+  modifications: [CartModification!]!
+  specialInstructions: String
+}
+
+"""Applied modification to a cart item."""
+type CartModification {
+  modification: Modification!
+  selectedOption: ModificationOption!
+  quantity: Int!
+  priceModifier: Float!
+}
+
+"""High-level order confirmation data."""
+type OrderSummary {
+  orderId: ID!
+  itemCount: Int!
+  subtotal: Price!
+  discounts: Float!
+  loyaltyPointsEarned: Int!
+  estimatedTime: Int
+}
+
+"""Full order price breakdown."""
+type OrderTotal {
+  subtotal: Price!
+  taxes: [Tax!]!
+  fees: [Fee!]!
+  discounts: Float!
+  loyaltyDiscount: Float!
+  total: Price!
+}
+
+"""Tax line item."""
+type Tax {
+  name: String!
+  jurisdiction: String!
+  rate: Float!
+  amount: Float!
+}
+
+"""Service, delivery, or convenience fee."""
+type Fee {
+  name: String!
+  description: String
+  amount: Float!
+  isMandatory: Boolean!
+}
+
+"""Current status of an order in its lifecycle."""
+type OrderStatus {
+  orderId: ID!
+  value: OrderStatusValue!
+  message: String
+  updatedAt: DateTime!
+}
+
+# ─── Payment Types ────────────────────────────────────────────────────────────
+
+"""Abstract payment method interface."""
+interface PaymentMethod {
+  id: ID!
+  type: PaymentType!
+  isDefault: Boolean!
+  isActive: Boolean!
+}
+
+"""Cash payment."""
+type Cash implements PaymentMethod {
+  id: ID!
+  type: PaymentType!
+  isDefault: Boolean!
+  isActive: Boolean!
+  changeRequired: Float
+}
+
+"""Credit or debit card payment."""
+type Card implements PaymentMethod {
+  id: ID!
+  type: PaymentType!
+  isDefault: Boolean!
+  isActive: Boolean!
+  last4: String!
+  cardBrand: String!
+  expiryMonth: Int!
+  expiryYear: Int!
+  cardholderName: String
+  billingZip: String
+}
+
+"""Digital wallet payment (Apple Pay, Google Pay, PayPal)."""
+type Digital implements PaymentMethod {
+  id: ID!
+  type: PaymentType!
+  isDefault: Boolean!
+  isActive: Boolean!
+  walletType: String!
+  displayName: String
+}
+
+"""Applied payment record on an order."""
+type Payment {
+  id: ID!
+  order: Order!
+  method: PaymentMethod!
+  amount: Price!
+  status: String!
+  transactionId: String
+  processedAt: DateTime
+}
+
+# ─── Promotions and Loyalty ───────────────────────────────────────────────────
+
+"""Time-bound discount or offer."""
+type Promotion {
+  id: ID!
+  brand: Brand!
+  name: String!
+  description: String!
+  imageUrl: URL
+  discountType: String!
+  discountValue: Float!
+  minimumOrderAmount: Float
+  applicableItems: [MenuItem!]!
+  startsAt: DateTime!
+  endsAt: DateTime
+  isActive: Boolean!
+  isPersonalized: Boolean!
+  targetAudience: String
+}
+
+"""Bundled pricing promotion."""
+type Deal {
+  id: ID!
+  brand: Brand!
+  name: String!
+  description: String!
+  items: [MenuItem!]!
+  bundlePrice: Price!
+  savings: Float!
+  imageUrl: URL
+  startsAt: DateTime!
+  endsAt: DateTime
+  isActive: Boolean!
+}
+
+"""Limited-time or targeted special offer."""
+type SpecialOffer {
+  id: ID!
+  brand: Brand!
+  name: String!
+  description: String!
+  offerCode: String
+  terms: String
+  imageUrl: URL
+  startsAt: DateTime!
+  endsAt: DateTime!
+  isActive: Boolean!
+  isPersonalized: Boolean!
+  customerSegment: String
+}
+
+"""Redeemable coupon with discount value."""
+type CouponCode {
+  id: ID!
+  code: String!
+  brand: Brand!
+  description: String!
+  discountType: String!
+  discountValue: Float!
+  minimumOrderAmount: Float
+  maxUses: Int
+  usesRemaining: Int
+  isActive: Boolean!
+  expiresAt: DateTime
+}
+
+"""Loyalty points balance and transaction record."""
+type LoyaltyPoints {
+  id: ID!
+  customer: Customer!
+  brand: Brand!
+  currentBalance: Int!
+  lifetimeEarned: Int!
+  lifetimeRedeemed: Int!
+  tier: String
+  transactions: [LoyaltyTransaction!]!
+  updatedAt: DateTime!
+}
+
+"""Single loyalty point transaction."""
+type LoyaltyTransaction {
+  id: ID!
+  type: String!
+  points: Int!
+  orderId: ID
+  description: String!
+  occurredAt: DateTime!
+}
+
+"""Brand loyalty program definition and tiers."""
+type RewardProgram {
+  id: ID!
+  brand: Brand!
+  name: String!
+  description: String!
+  pointsPerDollar: Float!
+  tiers: [LoyaltyTier!]!
+  termsUrl: URL
+  enrollUrl: URL
+  isActive: Boolean!
+}
+
+"""Tier within a loyalty program."""
+type LoyaltyTier {
+  id: ID!
+  program: RewardProgram!
+  name: String!
+  minimumPoints: Int!
+  benefits: [String!]!
+  pointsMultiplier: Float!
+  badge: URL
+}
+
+# ─── Delivery Types ───────────────────────────────────────────────────────────
+
+"""Delivery order with address, driver, and estimate."""
+type Delivery {
+  id: ID!
+  order: Order!
+  deliveryAddress: Address!
+  driver: Driver
+  estimate: DeliveryEstimate!
+  tracking: OrderTracking!
+  deliveryFee: Price!
+  tipAmount: Float
+  specialInstructions: String
+  isContactless: Boolean!
+  status: OrderStatusValue!
+}
+
+"""Delivery driver information."""
+type Driver {
+  id: ID!
+  firstName: String!
+  lastInitial: String!
+  photoUrl: URL
+  vehicleDescription: String
+  vehicleColor: String
+  licensePlatePartial: String
+  currentLocation: Location
+  phone: String
+  rating: Float
+}
+
+"""Estimated preparation and delivery time windows."""
+type DeliveryEstimate {
+  deliveryId: ID!
+  preparationMinutes: Int!
+  deliveryMinutes: Int!
+  totalMinutes: Int!
+  estimatedArrival: DateTime!
+  isRealtime: Boolean!
+  updatedAt: DateTime!
+}
+
+"""Real-time order status and driver location."""
+type OrderTracking {
+  orderId: ID!
+  status: OrderStatus!
+  driver: Driver
+  driverLocation: Location
+  estimatedArrival: DateTime
+  lastUpdated: DateTime!
+  trackingUrl: URL
+  events: [TrackingEvent!]!
+}
+
+"""A single event in the order tracking timeline."""
+type TrackingEvent {
+  status: OrderStatusValue!
+  description: String!
+  occurredAt: DateTime!
+  location: Location
+}
+
+# ─── Customer and Account Types ───────────────────────────────────────────────
+
+"""Registered customer profile."""
+type Customer {
+  id: ID!
+  firstName: String!
+  lastName: String!
+  email: String!
+  phone: String
+  account: CustomerAccount!
+  loyaltyAccounts: [LoyaltyPoints!]!
+  savedAddresses: [Address!]!
+  paymentMethods: [PaymentMethod!]!
+  preferences: JSON
+  isVerified: Boolean!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+"""Customer account details including payment methods and saved addresses."""
+type CustomerAccount {
+  id: ID!
+  customer: Customer!
+  username: String
+  isEmailVerified: Boolean!
+  isPhoneVerified: Boolean!
+  marketingOptIn: Boolean!
+  defaultBrand: Brand
+  defaultRestaurant: Restaurant
+  orderHistory: [Order!]!
+  feedbackHistory: [Feedback!]!
+  createdAt: DateTime!
+  lastLoginAt: DateTime
+}
+
+"""Customer order and loyalty activity history."""
+type AccountHistory {
+  customerId: ID!
+  totalOrders: Int!
+  totalSpent: Float!
+  favoriteRestaurant: Restaurant
+  favoriteItem: MenuItem
+  recentOrders: [Order!]!
+  loyaltyTransactions: [LoyaltyTransaction!]!
+  reviewsWritten: [Review!]!
+}
+
+# ─── Feedback and Reviews ─────────────────────────────────────────────────────
+
+"""Customer-submitted feedback record."""
+type Feedback {
+  id: ID!
+  customer: Customer
+  order: Order!
+  restaurant: Restaurant!
+  overallRating: Rating!
+  foodRating: Rating
+  serviceRating: Rating
+  cleanlinessRating: Rating
+  speedRating: Rating
+  review: Review
+  submittedAt: DateTime!
+}
+
+"""Numeric rating with context."""
+type Rating {
+  value: Float!
+  maxValue: Float!
+  context: String
+}
+
+"""Detailed written review with rating."""
+type Review {
+  id: ID!
+  feedback: Feedback!
+  title: String
+  body: String!
+  rating: Rating!
+  status: ReviewStatus!
+  isVerifiedPurchase: Boolean!
+  helpfulVotes: Int!
+  submittedAt: DateTime!
+  publishedAt: DateTime
+}
+
+# ─── Developer and Integration Types ─────────────────────────────────────────
+
+"""Developer API key with scopes and rate limits."""
+type APIKey {
+  id: ID!
+  name: String!
+  keyPrefix: String!
+  scopes: [String!]!
+  rateLimit: Int!
+  rateLimitWindow: String!
+  isActive: Boolean!
+  lastUsedAt: DateTime
+  expiresAt: DateTime
+  createdAt: DateTime!
+}
+
+"""Authentication token with expiry."""
+type Token {
+  accessToken: String!
+  refreshToken: String
+  tokenType: String!
+  expiresIn: Int!
+  scope: String!
+  issuedAt: DateTime!
+  expiresAt: DateTime!
+}
+
+"""Registered webhook endpoint with event subscriptions."""
+type Webhook {
+  id: ID!
+  url: URL!
+  events: [WebhookEvent!]!
+  secret: String!
+  isActive: Boolean!
+  failureCount: Int!
+  lastDeliveredAt: DateTime
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+# ─── Input Types ─────────────────────────────────────────────────────────────
+
+"""Geographic search input."""
+input LocationInput {
+  latitude: Float!
+  longitude: Float!
+}
+
+"""Create or update a customer order."""
+input OrderInput {
+  restaurantId: ID!
+  customerId: ID
+  guestEmail: String
+  serviceMode: ServiceMode!
+  items: [CartItemInput!]!
+  deliveryAddress: AddressInput
+  paymentMethodId: ID
+  promotionCodes: [String!]
+  specialInstructions: String
+  scheduledTime: DateTime
+}
+
+"""Line item in a cart."""
+input CartItemInput {
+  menuItemId: ID!
+  quantity: Int!
+  modifications: [CartModificationInput!]
+  specialInstructions: String
+}
+
+"""Applied modification for a cart item."""
+input CartModificationInput {
+  modificationId: ID!
+  optionId: ID!
+  quantity: Int
+}
+
+"""Address input."""
+input AddressInput {
+  street1: String!
+  street2: String
+  city: String!
+  state: String!
+  postalCode: String!
+  country: String!
+}
+
+"""Feedback submission input."""
+input FeedbackInput {
+  orderId: ID!
+  customerId: ID
+  overallRating: Float!
+  foodRating: Float
+  serviceRating: Float
+  cleanlinessRating: Float
+  speedRating: Float
+  reviewTitle: String
+  reviewBody: String
+}
+
+"""Webhook registration input."""
+input WebhookInput {
+  url: String!
+  events: [WebhookEvent!]!
+  secret: String!
+}
+
+"""Cart update input."""
+input CartInput {
+  orderId: ID
+  restaurantId: ID!
+  customerId: ID
+  serviceMode: ServiceMode!
+  items: [CartItemInput!]!
+  deliveryAddress: AddressInput
+}
+
+# ─── Queries ──────────────────────────────────────────────────────────────────
+
+type Query {
+  """Fetch a single Yum! Brands brand by ID."""
+  brand(id: ID!): Brand
+
+  """List all Yum! Brands brands."""
+  brands: [Brand!]!
+
+  """Fetch a single restaurant location by ID."""
+  restaurant(id: ID!): Restaurant
+
+  """Search restaurants by brand and/or proximity."""
+  restaurants(
+    brandId: ID
+    brandIdentifier: BrandIdentifier
+    location: LocationInput
+    radius: Float
+    serviceMode: ServiceMode
+    isOpen: Boolean
+    limit: Int
+    offset: Int
+  ): [Restaurant!]!
+
+  """Fetch the menu for a specific restaurant."""
+  menu(restaurantId: ID!, serviceMode: ServiceMode): Menu
+
+  """Fetch a single menu item by ID."""
+  menuItem(id: ID!): MenuItem
+
+  """Search menu items by name or keyword."""
+  menuItems(
+    brandId: ID!
+    query: String
+    categoryId: ID
+    isVegetarian: Boolean
+    isVegan: Boolean
+    isHalal: Boolean
+    maxCalories: Int
+    limit: Int
+    offset: Int
+  ): [MenuItem!]!
+
+  """Fetch an order by ID."""
+  order(id: ID!): Order
+
+  """Fetch orders for a customer."""
+  orders(customerId: ID!, limit: Int, offset: Int): [Order!]!
+
+  """Fetch real-time tracking for a delivery order."""
+  orderTracking(orderId: ID!): OrderTracking
+
+  """Fetch a customer profile by ID."""
+  customer(id: ID!): Customer
+
+  """Fetch loyalty points balance for a customer and brand."""
+  loyaltyPoints(customerId: ID!, brandId: ID!): LoyaltyPoints
+
+  """Fetch account history for a customer."""
+  accountHistory(customerId: ID!): AccountHistory
+
+  """List active promotions for a brand or restaurant."""
+  promotions(brandId: ID!, restaurantId: ID, limit: Int): [Promotion!]!
+
+  """List active deals for a brand."""
+  deals(brandId: ID!): [Deal!]!
+
+  """List active special offers for a customer."""
+  specialOffers(customerId: ID!, brandId: ID!): [SpecialOffer!]!
+
+  """Validate a coupon code."""
+  coupon(code: String!, brandId: ID!): CouponCode
+
+  """Fetch the reward program for a brand."""
+  rewardProgram(brandId: ID!): RewardProgram
+
+  """Fetch delivery estimate for a restaurant and address."""
+  deliveryEstimate(restaurantId: ID!, address: AddressInput!): DeliveryEstimate
+
+  """List registered webhooks for the authenticated developer."""
+  webhooks: [Webhook!]!
+}
+
+# ─── Mutations ────────────────────────────────────────────────────────────────
+
+type Mutation {
+  """Submit a new order."""
+  createOrder(input: OrderInput!): Order!
+
+  """Update items in an existing cart."""
+  updateCart(input: CartInput!): Order!
+
+  """Cancel an order."""
+  cancelOrder(orderId: ID!, reason: String): Order!
+
+  """Apply a promotion or coupon to an order."""
+  applyPromotion(orderId: ID!, code: String!): Order!
+
+  """Remove a promotion from an order."""
+  removePromotion(orderId: ID!, promotionId: ID!): Order!
+
+  """Redeem loyalty points on an order."""
+  redeemLoyaltyPoints(customerId: ID!, brandId: ID!, orderId: ID!, points: Int!): Order!
+
+  """Add a payment method to a customer account."""
+  addPaymentMethod(customerId: ID!, type: PaymentType!, details: JSON!): PaymentMethod!
+
+  """Remove a payment method from a customer account."""
+  removePaymentMethod(customerId: ID!, paymentMethodId: ID!): Boolean!
+
+  """Submit customer feedback for an order."""
+  submitFeedback(input: FeedbackInput!): Feedback!
+
+  """Save a delivery address for a customer."""
+  saveAddress(customerId: ID!, address: AddressInput!): Customer!
+
+  """Remove a saved address from a customer account."""
+  removeAddress(customerId: ID!, addressId: ID!): Customer!
+
+  """Update customer marketing preferences."""
+  updatePreferences(customerId: ID!, preferences: JSON!): Customer!
+
+  """Register a webhook endpoint."""
+  registerWebhook(input: WebhookInput!): Webhook!
+
+  """Update a registered webhook."""
+  updateWebhook(id: ID!, input: WebhookInput!): Webhook!
+
+  """Delete a registered webhook."""
+  deleteWebhook(id: ID!): Boolean!
+}
+
+# ─── Subscriptions ────────────────────────────────────────────────────────────
+
+type Subscription {
+  """Real-time order status updates."""
+  orderStatusUpdated(orderId: ID!): OrderStatus!
+
+  """Real-time driver location updates during delivery."""
+  driverLocationUpdated(orderId: ID!): Location!
+
+  """Notification when a new promotion becomes active for a customer."""
+  promotionActivated(customerId: ID!, brandId: ID!): Promotion!
+
+  """Notification when loyalty points balance changes."""
+  loyaltyPointsUpdated(customerId: ID!, brandId: ID!): LoyaltyPoints!
+}
