@@ -3,23 +3,10 @@
   "feeds": [
     {
       "source": "https://www.yum.com/wps/portal/yumbrands/Yumbrands/news",
-      "feed_url": "https://www.yum.com/wps/portal/yumbrands/Yumbrands/news",
-      "title": "",
       "saved": 0,
-      "method": "none"
-    },
-    {
-      "source": "https://www.yum.com/wps/portal/yumbrands/Yumbrands/bytebyyum",
-      "feed_url": "https://www.yum.com/wps/portal/yumbrands/Yumbrands/bytebyyum",
-      "title": "",
-      "saved": 0,
-      "method": "none"
-    },
-    {
-      "source": "https://investors.yum.com",
-      "error": "HTTPError"
+      "error": "timeout (3 attempts)"
     }
   ],
-  "fetched": "2026-06-14T20:42:17Z",
+  "fetched": "2026-06-27T13:22:37Z",
   "post_count": 0
 }
