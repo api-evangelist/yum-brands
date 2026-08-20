@@ -23,6 +23,14 @@ description: Yum! Brands is one of the world's largest restaurant companies, wit
   ordering, loyalty programs, point-of-sale, kitchen operations, inventory management,
   and team member tools across over 63,000 restaurants in 155 countries.
 tags:
+- Restaurant
+- Fast Food
+- Quick Service Restaurant
+- Digital Ordering
+- Loyalty
+- Food Technology
+- Fortune 500
+tags_raw:
 - Restaurants
 - Fast Food
 - Quick Service Restaurant
@@ -39,6 +47,11 @@ apis:
     and The Habit Burger Grill worldwide.
   humanURL: https://www.yum.com/wps/portal/yumbrands/Yumbrands/bytebyyum
   tags:
+  - Digital Ordering
+  - Loyalty
+  - Point-of-Sale
+  - Restaurant Technology
+  tags_raw:
   - Digital Ordering
   - Loyalty
   - POS
