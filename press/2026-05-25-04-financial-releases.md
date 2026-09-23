@@ -1,7 +1,9 @@
 ---
 title: Financial Releases
 url: https://investors.yum.com/news-events/financial-releases/
-date: '2026-05-25'
+published: ''
+date_basis: harvested
+harvested: '2026-05-25'
 query: '"Yum Brands" press release artificial intelligence'
 position: 4
 source: serpapi-google

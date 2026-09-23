@@ -1,7 +1,9 @@
 ---
 title: Yum! Brands to accelerate AI innovation in an industry-first ...
 url: https://www.yum.com/wps/portal/yumbrands/Yumbrands/news/press-releases/yum+brands+to+accelerate+ai+innovation+in+an+industry-first+collaboration+with+nvidia
-date: '2026-05-25'
+published: ''
+date_basis: harvested
+harvested: '2026-05-25'
 query: '"Yum Brands" press release artificial intelligence'
 position: 1
 source: serpapi-google

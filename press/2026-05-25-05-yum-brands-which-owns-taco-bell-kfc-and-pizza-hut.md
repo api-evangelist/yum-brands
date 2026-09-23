@@ -1,7 +1,9 @@
 ---
 title: Yum! Brands, which owns Taco Bell, KFC, and Pizza Hut ...
 url: https://www.facebook.com/TheDailyMeal/posts/yum-brands-which-owns-taco-bell-kfc-and-pizza-hut-recently-announced-a-partnersh/1057686653052355/
-date: '2026-05-25'
+published: ''
+date_basis: harvested
+harvested: '2026-05-25'
 query: '"Yum Brands" press release artificial intelligence'
 position: 5
 source: serpapi-google
