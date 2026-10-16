@@ -2,6 +2,13 @@
   "repo": "yum-brands",
   "feeds": [
     {
+      "source": "https://www.yum.com/wps/portal/yumbrands/Yumbrands/news",
+      "feed_url": "https://www.yum.com/wps/portal/yumbrands/Yumbrands/news",
+      "title": "",
+      "saved": 0,
+      "method": "none"
+    },
+    {
       "source": "https://www.yum.com/wps/portal/yumbrands/Yumbrands/bytebyyum",
       "feed_url": "https://www.yum.com/wps/portal/yumbrands/Yumbrands/bytebyyum",
       "title": "",
@@ -16,7 +23,7 @@
       "method": "none"
     }
   ],
-  "fetched": "2026-10-03T12:30:02Z",
+  "fetched": "2026-10-10T13:15:00Z",
   "post_count": 0,
   "feed_nature": "vendor-blog",
   "feed_nature_basis": "path_blog",
