@@ -1,0 +1,57 @@
+edges:
+- partner_name: International Franchise Association member franchise brands
+  partner: null
+  partner_match: register
+  type: register
+  channel: standard-directory
+  relationship: standard-participant
+  direction: partner-built
+  evidence: https://www.franchise.org/franchise-opportunities/
+  category: franchise industry association franchisor member
+  contract_reference:
+    register: International Franchise Association member franchise brands
+    spec_file: null
+    standard: null
+    role: ifa-franchisor-member
+    registrations:
+    - registered_name: Yum! Brands, Inc.
+      licences:
+      - ifa-franchisor-member
+      register_country: null
+      matched_name: Yum! Brands, Inc.
+      matched_domain: yum.com
+      matched_by: domain
+      categories:
+      - food restaurants
+      page: https://www.franchise.org/franchise-opportunities/yum-brands-inc/
+      identity: wikidata Q668737 'Yum! Brands' P856 https://yum.com
+    signal_note: 'participation only: listed in the IFA directory; no certification or API conformance'
+    detected_by: sweep-franchise-registries.py
+    detected: '2026-10-21'
+    identity_source: wikidata P856 (labelled provenance step; Kin 2026-10-15 decision 1)
+  detected_by: sweep-franchise-registries.py
+  first_seen: '2026-10-21'
+generated: '2026-10-21'
+method: searched
+source:
+- https://cards.web.commerce.state.mn.us/franchise-registrations
+- https://www.franchise.org/suppliers/
+- https://www.franchise.org/franchise-opportunities/
+- https://squareup.com/us/en/franchises
+- https://docqnet.dfpi.ca.gov/
+- https://dfpi.ca.gov/regulated-industries/regulated-entities-list/
+- https://apps.dfi.wi.gov/apps/FranchiseSearch/MainSearch.aspx
+- https://www.franchise.org/wp-json/wp/v2/member
+- https://pos.toasttab.com/franchise
+- https://www.servicetitan.com/market/franchise-management-software
+checked:
+- https://apps.dfi.wi.gov/apps/FranchiseSearch/MainSearch.aspx
+- https://cards.web.commerce.state.mn.us/franchise-registrations
+- https://dfpi.ca.gov/regulated-industries/regulated-entities-list/
+- https://docqnet.dfpi.ca.gov/
+- https://pos.toasttab.com/franchise
+- https://squareup.com/us/en/franchises
+- https://www.franchise.org/franchise-opportunities/
+- https://www.franchise.org/suppliers/
+- https://www.franchise.org/wp-json/wp/v2/member
+- https://www.servicetitan.com/market/franchise-management-software
