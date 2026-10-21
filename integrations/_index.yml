@@ -35,3 +35,29 @@
     identity_source: wikidata P856 (labelled provenance step; Kin 2026-10-15 decision 1)
   status: not-a-workflow
   arazzo: null
+- slug: yum-brands-gfsi-global-food-safety-initiative
+  label: GFSI (Global Food Safety Initiative)
+  partner_name: GFSI (Global Food Safety Initiative)
+  category: food safety coalition membership
+  type: register
+  channel: standard-directory
+  evidence: https://mygfsi.com/who-we-are/governance2/
+  source: edge
+  relationship: standard-participant
+  contract_reference:
+    register: 'GFSI governance page: Steering Committee and GFSI Members (mygfsi.com)'
+    standard: GFSI Benchmarking Requirements (Global Food Safety Initiative, Consumer Goods Forum)
+    spec_file: null
+    role: gfsi-member+gfsi-steering-committee
+    registered_name: Yum! Brands
+    matched_domain: yum.com
+    matched_by: domain
+    signal_note: 'participation only: GFSI member / Steering Committee company (the coalition that benchmarks food-safety
+      schemes); membership is not certification'
+    detected_by: sweep-food-safety-gfsi-certification.py
+    detected: '2026-10-21'
+    identity: wikidata Q668737 'Yum! Brands' P856 https://yum.com
+    identity_source: wikidata P856 (labelled provenance step; Kin 2026-10-15 decision 1)
+    register_id: yum.png
+  status: not-a-workflow
+  arazzo: null

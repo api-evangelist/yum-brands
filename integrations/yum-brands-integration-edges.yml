@@ -31,6 +31,32 @@ edges:
     identity_source: wikidata P856 (labelled provenance step; Kin 2026-10-15 decision 1)
   detected_by: sweep-franchise-registries.py
   first_seen: '2026-10-21'
+- partner_name: GFSI (Global Food Safety Initiative)
+  partner: null
+  partner_match: register
+  type: register
+  channel: standard-directory
+  relationship: standard-participant
+  direction: partner-built
+  evidence: https://mygfsi.com/who-we-are/governance2/
+  category: food safety coalition membership
+  contract_reference:
+    register: 'GFSI governance page: Steering Committee and GFSI Members (mygfsi.com)'
+    standard: GFSI Benchmarking Requirements (Global Food Safety Initiative, Consumer Goods Forum)
+    spec_file: null
+    role: gfsi-member+gfsi-steering-committee
+    registered_name: Yum! Brands
+    matched_domain: yum.com
+    matched_by: domain
+    signal_note: 'participation only: GFSI member / Steering Committee company (the coalition that benchmarks food-safety
+      schemes); membership is not certification'
+    detected_by: sweep-food-safety-gfsi-certification.py
+    detected: '2026-10-21'
+    identity: wikidata Q668737 'Yum! Brands' P856 https://yum.com
+    identity_source: wikidata P856 (labelled provenance step; Kin 2026-10-15 decision 1)
+    register_id: yum.png
+  detected_by: sweep-food-safety-gfsi-certification.py
+  first_seen: '2026-10-21'
 generated: '2026-10-21'
 method: searched
 source:
@@ -55,3 +81,11 @@ checked:
 - https://www.franchise.org/suppliers/
 - https://www.franchise.org/wp-json/wp/v2/member
 - https://www.servicetitan.com/market/franchise-management-software
+- https://directory.brcgs.com/
+- https://mygfsi.com/how-to-implement/recognition/certification-programme-owners
+- https://mygfsi.com/who-we-are/governance2/
+- https://sqfi.compliancemetrix.com/rql/g/Public_Directory
+- https://www.fssc.com/public-register/
+- https://www.ifs-certification.com/en/database
+- https://www.sqfi.com/certified-sites
+- https://www.sqfi.com/directories/certified-site-directory
